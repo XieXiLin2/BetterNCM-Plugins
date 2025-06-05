@@ -43,20 +43,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         working-directory: plugins/scripts/pack-plugins
-      - name: Checkout release repo
-        uses: actions/checkout@v3
+      # - name: Checkout release repo
+      #   uses: actions/checkout@v3
+      #   with:
+      #     repository: 'BetterNCM/BetterNCM-Packed-Plugins'
+      #     token: ${{ secrets.GH_TOKEN }}
+      #     path: release
+      # - name: Copy files
+      #   run: |
+      #     cp -rf ./plugins/tmp/* ./release/
+      # - name: Commit and push files
+      #   run: |
+      #     git config --local user.email "betterncm-bot@proton.me"
+      #     git config --local user.name "BetterNCM-Bot"
+      #     git add .
+      #     git commit -m "Update"
+      #     git push https://${{ secrets.GH_TOKEN }}@github.com/BetterNCM/BetterNCM-Packed-Plugins.git
+      #   working-directory: release
+      - name: 'Upload Artifacts'
+        uses: actions/upload-artifact@latest
         with:
-          repository: 'BetterNCM/BetterNCM-Packed-Plugins'
-          token: ${{ secrets.GH_TOKEN }}
-          path: release
-      - name: Copy files
-        run: |
-          cp -rf ./plugins/tmp/* ./release/
-      - name: Commit and push files
-        run: |
-          git config --local user.email "betterncm-bot@proton.me"
-          git config --local user.name "BetterNCM-Bot"
-          git add .
-          git commit -m "Update"
-          git push https://${{ secrets.GH_TOKEN }}@github.com/BetterNCM/BetterNCM-Packed-Plugins.git
-        working-directory: release
+          name: 'Packed Plugins'
+          path: ./plugins/tmp/*
